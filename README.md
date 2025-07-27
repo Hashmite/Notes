@@ -17,3 +17,5 @@ logging:
     org.apache.tomcat: INFO
     org.springframework: INFO
     com.chinamobile.cmss.bdpaas.resource.monitor: DEBUG
+ 
+
