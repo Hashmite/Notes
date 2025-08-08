@@ -1,0 +1,140 @@
+{
+  "author" : "杨开虎",
+  "version" : "1.2.9",
+  "userSecure" : "",
+  "currTypeMapperGroupName" : "Default",
+  "currTemplateGroupName" : "MybatisPlus-Mixed",
+  "currColumnConfigGroupName" : "Default",
+  "currGlobalConfigGroupName" : "Default",
+  "typeMapper" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "matchType" : "REGEX",
+        "columnType" : "varchar(\\(\\d+\\))?",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "char(\\(\\d+\\))?",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "(tiny|medium|long)*text",
+        "javaType" : "java.lang.String"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "decimal(\\(\\d+,\\d+\\))?",
+        "javaType" : "java.lang.Double"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "integer",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "(tiny|small|medium)*int(\\(\\d+\\))?",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "int4",
+        "javaType" : "java.lang.Integer"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "int8",
+        "javaType" : "java.lang.Long"
+      }, {
+        "matchType" : "REGEX",
+        "columnType" : "bigint(\\(\\d+\\))?",
+        "javaType" : "java.lang.Long"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "date",
+        "javaType" : "java.util.Date"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "datetime",
+        "javaType" : "java.util.Date"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "timestamp",
+        "javaType" : "java.util.Date"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "time",
+        "javaType" : "java.time.LocalTime"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "boolean",
+        "javaType" : "java.lang.Boolean"
+      }, {
+        "matchType" : "ORDINARY",
+        "columnType" : "bit(1)",
+        "javaType" : "java.lang.Integer"
+      } ]
+    }
+  },
+  "template" : {
+    "MybatisPlus-Mixed" : {
+      "name" : "MybatisPlus-Mixed",
+      "elementList" : [ {
+        "name" : "controller.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n##设置表后缀（宏定义）\n#setTableSuffix(\"Controller\")\n\n##保存文件（宏定义）\n#save(\"/controller\", \"Controller.java\")\n\n##包路径（宏定义）\n#setPackageSuffix(\"controller\")\n\n##定义服务名\n#set($serviceName = $!tool.append($!tool.firstLowerCase($!tableInfo.name), \"Service\"))\n\n##定义实体对象名\n#set($entityName = $!tool.firstLowerCase($!tableInfo.name))\n\nimport io.swagger.annotations.Api;\nimport io.swagger.annotations.ApiOperation;\nimport io.swagger.annotations.ApiResponse;\nimport org.apache.commons.logging.LogFactory;\nimport io.swagger.annotations.ApiResponses;\nimport com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;\nimport com.baomidou.mybatisplus.extension.api.ApiController;\nimport com.baomidou.mybatisplus.extension.api.R;\nimport com.baomidou.mybatisplus.extension.plugins.pagination.Page;\nimport $!{tableInfo.savePackageName}.entity.$!tableInfo.name;\nimport $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;\nimport org.springframework.web.bind.annotation.*;\n\nimport javax.annotation.Resource;\nimport java.io.Serializable;\nimport java.util.List;\n\n##表注释（宏定义）\n#tableComment(\"表控制层\")\n@RestController\n@RequestMapping(\"$!tool.firstLowerCase($!tableInfo.name)\")\n@Api(\"$!tool.firstLowerCase($!tableInfo.name)\")\npublic class $!{tableName} extends ApiController {\n\n private static final Log logger = LogFactory.getLog($!{tableName}.class);\n    /**\n     * 服务对象\n     */\n    @Resource\n    private $!{tableInfo.name}Service $!{serviceName};\n\n    /**\n     * 分页查询所有数据\n     *\n     * @param page 分页对象\n     * @param $!entityName 查询实体\n     * @return 所有数据\n     */\n\n    @RequestMapping(value = \"/queryPage\", method = RequestMethod.GET)\n    @ApiResponses(value = {\n            @ApiResponse(code = 200,message = \"Success\",reference = \"https://baidu.com\"),\n            @ApiResponse(code = 404,message = \"Not found\"),\n            @ApiResponse(code = 500,message = \"Server wrong\")\n    })\n    public R selectAll(Page<$!tableInfo.name> page, $!tableInfo.name $!entityName) {\n        return success(this.$!{serviceName}.page(page, new QueryWrapper<>($!entityName)));\n    }\n\n    /**\n     * 通过主键查询单条数据\n     *\n     * @param id 主键\n     * @return 单条数据\n     */\n    @RequestMapping(value=\"{id}\",method = RequestMethod.GET)\n    @ApiResponses(value = {\n            @ApiResponse(code = 200,message = \"Success\",reference = \"https://baidu.com\"),\n            @ApiResponse(code = 404,message = \"Not found\"),\n            @ApiResponse(code = 500,message = \"Server wrong\")\n    })\n    public R selectOne(@PathVariable Serializable id) {\n        return success(this.$!{serviceName}.getById(id));\n    }\n\n    /**\n     * 新增数据\n     *\n     * @param $!entityName 实体对象\n     * @return 新增结果\n     */\n    @RequestMapping(value = \"/addData\",method = RequestMethod.POST)\n    @ApiResponses(value = {\n            @ApiResponse(code = 200,message = \"Success\",reference = \"https://baidu.com\"),\n            @ApiResponse(code = 404,message = \"Not found\"),\n            @ApiResponse(code = 500,message = \"Server wrong\")\n    })\n    public R insert(@RequestBody $!tableInfo.name $!entityName) {\n        return success(this.$!{serviceName}.save($!entityName));\n    }\n\n    /**\n     * 修改数据\n     *\n     * @param $!entityName 实体对象\n     * @return 修改结果\n     */\n  \n    @RequestMapping(value = \"/modifyData\",method = RequestMethod.PUT)\n    @ApiResponses(value = {\n            @ApiResponse(code = 200,message = \"Success\",reference = \"https://baidu.com\"),\n            @ApiResponse(code = 404,message = \"Not found\"),\n            @ApiResponse(code = 500,message = \"Server wrong\")\n    })\n    public R update(@RequestBody $!tableInfo.name $!entityName) {\n        return success(this.$!{serviceName}.updateById($!entityName));\n    }\n\n    /**\n     * 删除数据\n     *\n     * @param idList 主键结合\n     * @return 删除结果\n     */\n\n     @RequestMapping(value = \"/delData\",method = RequestMethod.DELETE)\n    @ApiResponses(value = {\n            @ApiResponse(code = 200,message = \"Success\",reference = \"https://baidu.com\"),\n            @ApiResponse(code = 404,message = \"Not found\"),\n            @ApiResponse(code = 500,message = \"Server wrong\")\n    })\n    public R delete(@RequestParam(\"idList\") List<Long> idList) {\n        return success(this.$!{serviceName}.removeByIds(idList));\n    }\n}\n"
+      }, {
+        "name" : "dao.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##设置表后缀（宏定义）\n#setTableSuffix(\"Dao\")\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n##保存文件（宏定义）\n#save(\"/dao\", \"Dao.java\")\n\n##包路径（宏定义）\n#setPackageSuffix(\"dao\")\n\nimport java.util.List;\n\nimport com.baomidou.mybatisplus.core.mapper.BaseMapper;\nimport org.apache.ibatis.annotations.Param;\nimport $!{tableInfo.savePackageName}.entity.$!tableInfo.name;\n\n##表注释（宏定义）\n#tableComment(\"表数据库访问层\")\npublic interface $!{tableName} extends BaseMapper<$!tableInfo.name> {\n\n/**\n* 批量新增数据（MyBatis原生foreach方法）\n*\n* @param entities List<$!{tableInfo.name}> 实例对象列表\n* @return 影响行数\n*/\nint insertBatch(@Param(\"entities\") List<$!{tableInfo.name}> entities);\n\n/**\n* 批量新增或按主键更新数据（MyBatis原生foreach方法）\n*\n* @param entities List<$!{tableInfo.name}> 实例对象列表\n* @return 影响行数\n* @throws org.springframework.jdbc.BadSqlGrammarException 入参是空List的时候会抛SQL语句错误的异常，请自行校验入参\n*/\nint insertOrUpdateBatch(@Param(\"entities\") List<$!{tableInfo.name}> entities);\n\n}\n"
+      }, {
+        "name" : "entity.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##保存文件（宏定义）\n#save(\"/entity\", \".java\")\n\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n##包路径（宏定义）\n#setPackageSuffix(\"entity\")\n\n##自动导入包（全局变量）\n$!{autoImport.vm}\nimport com.baomidou.mybatisplus.extension.activerecord.Model;\nimport lombok.Data;\nimport java.io.Serializable;\n\n##表注释（宏定义）\n#tableComment(\"表实体类\")\n@SuppressWarnings(\"serial\")\n@Data\npublic class $!{tableInfo.name} extends Model<$!{tableInfo.name}> {\n\n#foreach($column in $tableInfo.fullColumn)\n    #if(${column.comment})\n/**\n *  ${column.comment}\n */\n #end\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n#end\n\n##foreach($column in $tableInfo.fullColumn)\n##getSetMethod($column)\n##end\n\n#foreach($column in $tableInfo.pkColumn)\n    /**\n     * 获取主键值\n     *\n     * @return 主键值\n     */\n    @Override\n    public Serializable pkVal() {\n        return this.$!column.name;\n    }\n    #break\n#end\n}\n"
+      }, {
+        "name" : "mapper.xml.vm",
+        "code" : "##引入mybatis支持\n$!{mybatisSupport.vm}\n\n##设置保存名称与保存位置\n$!callback.setFileName($tool.append($!{tableInfo.name}, \"Dao.xml\"))\n$!callback.setSavePath($tool.append($modulePath, \"/src/main/resources/mapper\"))\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n##拿到主键\n#if(!$tableInfo.pkColumn.isEmpty())\n    #set($pk = $tableInfo.pkColumn.get(0))\n#end\n\n<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\n<mapper namespace=\"$!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Dao\">\n\n    <resultMap type=\"$!{tableInfo.savePackageName}.entity.$!{tableInfo.name}\" id=\"$!{tableInfo.name}Map\">\n#foreach($column in $tableInfo.fullColumn)\n        <result property=\"$!column.name\" column=\"$!column.obj.name\" jdbcType=\"$!column.ext.jdbcType\"/>\n#end\n    </resultMap>\n\n    <!-- 批量插入 -->\n    <insert id=\"insertBatch\" keyProperty=\"$!pk.name\" useGeneratedKeys=\"true\">\n        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($foreach.hasNext), #end#end)\n        values\n        <foreach collection=\"entities\" item=\"entity\" separator=\",\">\n        (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($foreach.hasNext), #end#end)\n        </foreach>\n    </insert>\n    <!-- 批量插入或按主键更新 -->\n    <insert id=\"insertOrUpdateBatch\" keyProperty=\"$!pk.name\" useGeneratedKeys=\"true\">\n        insert into $!{tableInfo.obj.parent.name}.$!{tableInfo.obj.name}(#foreach($column in $tableInfo.otherColumn)$!column.obj.name#if($foreach.hasNext), #end#end)\n        values\n        <foreach collection=\"entities\" item=\"entity\" separator=\",\">\n            (#foreach($column in $tableInfo.otherColumn)#{entity.$!{column.name}}#if($foreach.hasNext), #end#end)\n        </foreach>\n        on duplicate key update\n         #foreach($column in $tableInfo.otherColumn)$!column.obj.name = values($!column.obj.name) #if($foreach.hasNext), #end#end\n    </insert>\n\n</mapper>\n"
+      }, {
+        "name" : "service.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##设置表后缀（宏定义）\n#setTableSuffix(\"Service\")\n\n##保存文件（宏定义）\n#save(\"/service\", \"Service.java\")\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n##包路径（宏定义）\n#setPackageSuffix(\"service\")\n\nimport com.baomidou.mybatisplus.extension.service.IService;\nimport $!{tableInfo.savePackageName}.entity.$!tableInfo.name;\n\n##表注释（宏定义）\n#tableComment(\"表服务接口\")\npublic interface $!{tableName} extends IService<$!tableInfo.name> {\n\n}\n"
+      }, {
+        "name" : "serviceImpl.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##设置表后缀（宏定义）\n#setTableSuffix(\"ServiceImpl\")\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n##保存文件（宏定义）\n#save(\"/service/impl\", \"ServiceImpl.java\")\n\n##包路径（宏定义）\n#setPackageSuffix(\"service.impl\")\n\nimport com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;\nimport org.apache.commons.logging.LogFactory;\nimport org.springframework.transaction.annotation.Transactional;\nimport $!{tableInfo.savePackageName}.dao.$!{tableInfo.name}Dao;\nimport $!{tableInfo.savePackageName}.entity.$!{tableInfo.name};\nimport $!{tableInfo.savePackageName}.service.$!{tableInfo.name}Service;\nimport org.springframework.stereotype.Service;\n\n##表注释（宏定义）\n#tableComment(\"表服务实现类\")\n@Service(\"$!tool.firstLowerCase($tableInfo.name)Service\")\n@Transactional\npublic class $!{tableName} extends ServiceImpl<$!{tableInfo.name}Dao, $!{tableInfo.name}> implements $!{tableInfo.name}Service {\n private static final Log logger = LogFactory.getLog($!{tableName}.class);\n}\n"
+      }, {
+        "name" : "vo.java.vm",
+        "code" : "##导入宏定义\n$!{define.vm}\n\n##设置表后缀（宏定义）\n#setTableSuffix(\"Vo\")\n\n##去掉表的t_前缀\n##$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n$!{init.vm}\n\n\n##保存文件（宏定义）\n#save(\"/vo\", \"Vo.java\")\n\n##包路径（宏定义）\n#setPackageSuffix(\"vo\")\nimport lombok.Data;\nimport java.util.List;\n\n\n\n\n##表注释（宏定义）\n#tableComment(\"表数据库访问层\")\n@Data\npublic class $!{tableName}  {\n\n\n#foreach($column in $tableInfo.fullColumn)\n    #if(${column.comment})\n    /**\n    *${column.comment}\n     */\n    #end\n    private $!{tool.getClsNameByFullName($column.type)} $!{column.name};\n    #end\n\n\n#foreach($column in $tableInfo.pkColumn)\n\n#end\n}\n"
+      }, {
+        "name" : "log4j2-spring.xml.vm",
+        "code" : "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Configuration>\n    <!--日志级别优先级从低到高：ALL、DEBUG、 INFO、 WARN、 ERROR、FATAL、 OFF。\n    一般官网建议就使用DEBUG、INFO、WARN和ERROR这四个，\n    但是我们可以加一个ALL最低级别的来进行总日志的输出。日志的登记越高，打出的日志越少。-->\n    <!--<Configuration status=\"WARN\" monitorInterval=\"30\"> -->\n    <properties>\n        <property name=\"LOG_HOME\">./log/service-logs</property>\n    </properties>\n\n    <Appenders>\n        <!--*********************控制台日志***********************-->\n        <Console name=\"consoleAppender\" target=\"SYSTEM_OUT\">\n            <!--设置日志格式及颜色-->\n            <PatternLayout\n                    pattern=\"%style{%d{ISO8601}}{bright,green} %highlight{%-5level} [%style{%t}{bright,blue}] %style{%C{}}{bright,yellow}: %msg%n%style{%throwable}{red}\"\n                    disableAnsi=\"false\" noConsoleNoAnsi=\"false\"/>\n        </Console>\n\n        <!--*********************文件日志***********************-->\n        <!--all级别日志-->\n        <RollingFile name=\"allFileAppender\"\n                     fileName=\"${LOG_HOME}/all.log\"\n                     filePattern=\"${LOG_HOME}/$${date:yyyy-MM}/all-%d{yyyy-MM-dd}-%i.log.gz\">\n            <!--设置日志格式-->\n            <PatternLayout>\n                <pattern>%d %p %C{} [%t] %m%n</pattern>\n            </PatternLayout>\n            <!--配置触发日志滚动条件-->\n            <Policies>\n                <!-- 设置日志文件切分参数 -->\n                <!--<OnStartupTriggeringPolicy/>-->\n                <!--设置日志基础文件大小，超过该大小就触发日志文件滚动更新-->\n                <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n                <!--设置日志文件滚动更新的时间，依赖于文件命名filePattern的设置-->\n                <TimeBasedTriggeringPolicy/>\n            </Policies>\n            <!--设置日志的文件个数上限，不设置默认为7个，超过大小后会被覆盖；依赖于filePattern中的%i-->\n            <DefaultRolloverStrategy max=\"100\"/>\n        </RollingFile>\n\n        <!--debug级别日志-->\n        <RollingFile name=\"debugFileAppender\"\n                     fileName=\"${LOG_HOME}/debug.log\"\n                     filePattern=\"${LOG_HOME}/$${date:yyyy-MM}/debug-%d{yyyy-MM-dd}-%i.log.gz\">\n            <Filters>\n                <!--过滤掉info及更高级别日志-->\n                <ThresholdFilter level=\"info\" onMatch=\"DENY\" onMismatch=\"NEUTRAL\"/>\n            </Filters>\n            <!--设置日志格式-->\n            <PatternLayout>\n                <pattern>%d %p %C{} [%t] %m%n</pattern>\n            </PatternLayout>\n            <Policies>\n                <!-- 设置日志文件切分参数 -->\n                <!--<OnStartupTriggeringPolicy/>-->\n                <!--设置日志基础文件大小，超过该大小就触发日志文件滚动更新-->\n                <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n                <!--设置日志文件滚动更新的时间，依赖于文件命名filePattern的设置-->\n                <TimeBasedTriggeringPolicy/>\n            </Policies>\n            <!--设置日志的文件个数上限，不设置默认为7个，超过大小后会被覆盖；依赖于filePattern中的%i-->\n            <DefaultRolloverStrategy max=\"100\"/>\n        </RollingFile>\n\n        <!--info级别日志-->\n        <RollingFile name=\"infoFileAppender\"\n                     fileName=\"${LOG_HOME}/info.log\"\n                     filePattern=\"${LOG_HOME}/$${date:yyyy-MM}/info-%d{yyyy-MM-dd}-%i.log.gz\">\n            <Filters>\n                <!--过滤掉warn及更高级别日志-->\n                <ThresholdFilter level=\"warn\" onMatch=\"DENY\" onMismatch=\"NEUTRAL\"/>\n            </Filters>\n            <!--设置日志格式-->\n            <PatternLayout>\n                <pattern>%d %p %C{} [%t] %m%n</pattern>\n            </PatternLayout>\n            <Policies>\n            <!-- 设置日志文件切分参数 -->\n            <!--<OnStartupTriggeringPolicy/>-->\n            <!--设置日志基础文件大小，超过该大小就触发日志文件滚动更新-->\n            <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n            <!--设置日志文件滚动更新的时间，依赖于文件命名filePattern的设置-->\n           <!-- <TimeBasedTriggeringPolicy interval=\"1\" modulate=\"true />-->\n            </Policies>\n            <!--设置日志的文件个数上限，不设置默认为7个，超过大小后会被覆盖；依赖于filePattern中的%i-->\n            <!--<DefaultRolloverStrategy max=\"100\"/>-->\n        </RollingFile>\n\n        <!--warn级别日志-->\n        <RollingFile name=\"warnFileAppender\"\n                     fileName=\"${LOG_HOME}/warn.log\"\n                     filePattern=\"${LOG_HOME}/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log.gz\">\n            <Filters>\n                <!--过滤掉error及更高级别日志-->\n                <ThresholdFilter level=\"error\" onMatch=\"DENY\" onMismatch=\"NEUTRAL\"/>\n            </Filters>\n            <!--设置日志格式-->\n            <PatternLayout>\n                <pattern>%d %p %C{} [%t] %m%n</pattern>\n            </PatternLayout>\n            <Policies>\n                <!-- 设置日志文件切分参数 -->\n                <!--<OnStartupTriggeringPolicy/>-->\n                <!--设置日志基础文件大小，超过该大小就触发日志文件滚动更新-->\n                <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n                <!--设置日志文件滚动更新的时间，依赖于文件命名filePattern的设置-->\n                <TimeBasedTriggeringPolicy/>\n            </Policies>\n            <!--设置日志的文件个数上限，不设置默认为7个，超过大小后会被覆盖；依赖于filePattern中的%i-->\n            <DefaultRolloverStrategy max=\"100\"/>\n        </RollingFile>\n\n        <!--error及更高级别日志-->\n        <RollingFile name=\"errorFileAppender\"\n                     fileName=\"${LOG_HOME}/error.log\"\n                     filePattern=\"${LOG_HOME}/$${date:yyyy-MM}/error-%d{yyyy-MM-dd}-%i.log.gz\">\n            <!--设置日志格式-->\n            <PatternLayout>\n                <pattern>%d %p %C{} [%t] %m%n</pattern>\n            </PatternLayout>\n            <Policies>\n                <!-- 设置日志文件切分参数 -->\n                <!--<OnStartupTriggeringPolicy/>-->\n                <!--设置日志基础文件大小，超过该大小就触发日志文件滚动更新-->\n                <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n                <!--设置日志文件滚动更新的时间，依赖于文件命名filePattern的设置-->\n                <TimeBasedTriggeringPolicy/>\n            </Policies>\n            <!--设置日志的文件个数上限，不设置默认为7个，超过大小后会被覆盖；依赖于filePattern中的%i-->\n            <DefaultRolloverStrategy max=\"100\"/>\n        </RollingFile>\n\n        <!--json格式error级别日志-->\n        <RollingFile name=\"errorJsonAppender\"\n                     fileName=\"${LOG_HOME}/error-json.log\"\n                     filePattern=\"${LOG_HOME}/error-json-%d{yyyy-MM-dd}-%i.log.gz\">\n            <JSONLayout compact=\"true\" eventEol=\"true\" locationInfo=\"true\"/>\n            <Policies>\n                <SizeBasedTriggeringPolicy size=\"100 MB\"/>\n                <TimeBasedTriggeringPolicy interval=\"1\" modulate=\"true\"/>\n            </Policies>\n        </RollingFile>\n    </Appenders>\n\n    <Loggers>\n        <!-- 根日志设置 -->\n        <Root level=\"all\" >\n            <AppenderRef ref=\"consoleAppender\" level=\"all\"/>\n            <AppenderRef ref=\"allFileAppender\" level=\"all\"/>\n            <AppenderRef ref=\"debugFileAppender\" level=\"debug\"/>\n            <AppenderRef ref=\"infoFileAppender\" level=\"info\"/>\n            <AppenderRef ref=\"warnFileAppender\" level=\"warn\"/>\n            <AppenderRef ref=\"errorFileAppender\" level=\"error\"/>\n            <AppenderRef ref=\"errorJsonAppender\" level=\"error\"/>\n\n\n        </Root>\n\n        <!--spring日志-->\n        <Logger name=\"org.springframework\" level=\"info\"/>\n        <!--mysql数据源日志-->\n\n        <!-- mybatis日志 -->\n        <Logger name=\"com.baomidou\" level=\"info\"/>\n    </Loggers>\n\n</Configuration>"
+      }, {
+        "name" : "Result.java.vm",
+        "code" : "package com.wiki.blog.vo;\n\nimport lombok.AllArgsConstructor;\nimport lombok.Data;\n\n/**\n * @Auther: yangkaihu\n * @Date: 2025/7/22 星期二\n * @Description: 请求返回的json 格式配置\n * @VERSON: 17\n */\n\n@Data\n@AllArgsConstructor\npublic class Result {\n    private  boolean success;\n    private int code;\n    private String msg;\n    private  Object data;\n\n\n    public static Result success(Object data){\n        return new Result(true,200, \"success\",data);\n    }\n\n    public static Result failed(int code, String msg){\n        return new Result(false, code,msg,null);\n    }\n}\n\n\n"
+      } ]
+    }
+  },
+  "columnConfig" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "title" : "disable",
+        "type" : "BOOLEAN",
+        "selectValue" : ""
+      }, {
+        "title" : "support",
+        "type" : "SELECT",
+        "selectValue" : "add,edit,query,del,ui"
+      } ]
+    }
+  },
+  "globalConfig" : {
+    "Default" : {
+      "name" : "Default",
+      "elementList" : [ {
+        "name" : "autoImport.vm",
+        "value" : "##自动导入包（仅导入实体属性需要的包，通常用于实体类）\n#foreach($import in $importList)\nimport $!import;\n#end"
+      }, {
+        "name" : "define.vm",
+        "value" : "##（Velocity宏定义）\n\n##定义设置表名后缀的宏定义，调用方式：#setTableSuffix(\"Test\")\n#macro(setTableSuffix $suffix)\n    #set($tableName = $!tool.append($tableInfo.name, $suffix))\n#end\n\n##定义设置包名后缀的宏定义，调用方式：#setPackageSuffix(\"Test\")\n#macro(setPackageSuffix $suffix)\n#if($suffix!=\"\")package #end#if($tableInfo.savePackageName!=\"\")$!{tableInfo.savePackageName}.#{end}$!suffix;\n#end\n\n##定义直接保存路径与文件名简化的宏定义，调用方式：#save(\"/entity\", \".java\")\n#macro(save $path $fileName)\n    $!callback.setSavePath($tool.append($tableInfo.savePath, $path))\n    $!callback.setFileName($tool.append($tableInfo.name, $fileName))\n#end\n\n##定义表注释的宏定义，调用方式：#tableComment(\"注释信息\")\n#macro(tableComment $desc)\n/**\n * $!{tableInfo.comment}($!{tableInfo.name})$desc\n *\n * @author $!author\n * @since $!time.currTime()\n */\n#end\n\n##定义GET，SET方法的宏定义，调用方式：#getSetMethod($column)\n#macro(getSetMethod $column)\n\n    public $!{tool.getClsNameByFullName($column.type)} get$!{tool.firstUpperCase($column.name)}() {\n        return $!{column.name};\n    }\n\n    public void set$!{tool.firstUpperCase($column.name)}($!{tool.getClsNameByFullName($column.type)} $!{column.name}) {\n        this.$!{column.name} = $!{column.name};\n    }\n#end"
+      }, {
+        "name" : "init.vm",
+        "value" : "##初始化区域\n\n##去掉表的t_前缀\n$!tableInfo.setName($tool.getClassName($tableInfo.obj.name.replaceFirst(\"ms_\",\"\")))\n\n## 定义版本\n#set($version = \"1.0.0\")\n\n## 创建时间标识\n#set($createTime = \"create_time\")\n\n##参考阿里巴巴开发手册，POJO 类中布尔类型的变量，都不要加 is 前缀，否则部分框架解析会引起序列化错误\n#foreach($column in $tableInfo.fullColumn)\n#if($column.name.startsWith(\"is\") && $column.type.equals(\"java.lang.Boolean\"))\n    $!column.setName($tool.firstLowerCase($column.name.substring(2)))\n#end\n#end\n\n##实现动态排除列\n#set($temp = $tool.newHashSet(\"testCreateTime\", \"otherColumn\"))\n#foreach($item in $temp)\n    #set($newList = $tool.newArrayList())\n    #foreach($column in $tableInfo.fullColumn)\n        #if($column.name!=$item)\n            ##带有反回值的方法调用时使用$tool.call来消除返回值\n            $tool.call($newList.add($column))\n        #end\n    #end\n    ##重新保存\n    $tableInfo.setFullColumn($newList)\n#end\n\n##对importList进行篡改\n#set($temp = $tool.newHashSet())\n#foreach($column in $tableInfo.fullColumn)\n    #if(!$column.type.startsWith(\"java.lang.\"))\n        ##带有反回值的方法调用时使用$tool.call来消除返回值\n        $tool.call($temp.add($column.type))\n    #end\n#end\n##覆盖\n#set($importList = $temp)"
+      }, {
+        "name" : "mybatisSupport.vm",
+        "value" : "##针对Mybatis 进行支持，主要用于生成xml文件\n#foreach($column in $tableInfo.fullColumn)\n    ##储存列类型\n    $tool.call($column.ext.put(\"sqlType\", $tool.getField($column.obj.dataType, \"typeName\")))\n    #if($tool.newHashSet(\"java.lang.String\").contains($column.type))\n        #set($jdbcType=\"VARCHAR\")\n    #elseif($tool.newHashSet(\"java.lang.Boolean\", \"boolean\").contains($column.type))\n        #set($jdbcType=\"BOOLEAN\")\n    #elseif($tool.newHashSet(\"java.lang.Byte\", \"byte\").contains($column.type))\n        #set($jdbcType=\"BYTE\")\n    #elseif($tool.newHashSet(\"java.lang.Integer\", \"int\", \"java.lang.Short\", \"short\").contains($column.type))\n        #set($jdbcType=\"INTEGER\")\n    #elseif($tool.newHashSet(\"java.lang.Long\", \"long\").contains($column.type))\n        #set($jdbcType=\"INTEGER\")\n    #elseif($tool.newHashSet(\"java.lang.Float\", \"float\", \"java.lang.Double\", \"double\").contains($column.type))\n        #set($jdbcType=\"NUMERIC\")\n    #elseif($tool.newHashSet(\"java.util.Date\", \"java.sql.Timestamp\", \"java.time.Instant\", \"java.time.LocalDateTime\", \"java.time.OffsetDateTime\", \"\tjava.time.ZonedDateTime\").contains($column.type))\n        #set($jdbcType=\"TIMESTAMP\")\n    #elseif($tool.newHashSet(\"java.sql.Date\", \"java.time.LocalDate\").contains($column.type))\n        #set($jdbcType=\"TIMESTAMP\")\n    #else\n        ##其他类型\n        #set($jdbcType=\"VARCHAR\")\n    #end\n    $tool.call($column.ext.put(\"jdbcType\", $jdbcType))\n#end\n\n##定义宏，查询所有列\n#macro(allSqlColumn)#foreach($column in $tableInfo.fullColumn)$column.obj.name#if($foreach.hasNext), #end#end#end\n"
+      } ]
+    }
+  }
+}
