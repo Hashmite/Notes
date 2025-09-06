@@ -8,7 +8,7 @@
 
 <h5><p align="center"><i>If you like this series or learn something from it, please<a href="https://github.com/yangkaihu/Notes">★</a> this repository to show your support! 🤩</i></p>
 <p>
-    <h5 align="center">本仓库非常适合 React 的学习者，持续收集 React 相关的技术好文，如果有什么问题、错误的地方或者有什么想要添加的内容，欢迎与我联系！</h5>
+    <h5 align="center">本仓库非常适合 基础技能 的学习者，如果有什么问题、错误的地方或者有什么想要添加的内容，欢迎与我联系！</h5>
     </p>
 </h5>
 
