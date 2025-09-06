@@ -16,7 +16,7 @@ logging:
     com.chinamobile.cmss.bdpaas.resource.monitor: DEBUG
   ```
 
-# 开发基本安装部署 wiki
+# 开发基本安装部署
 
 - [Linux 的安装](https://github.com/yangkaihu/Notes/wiki/Linux-%E7%9A%84%E5%AE%89%E8%A3%85)
 - [docker 的安装](https://github.com/yangkaihu/Notes/wiki/docker--%E7%9A%84%E5%AE%89%E8%A3%85)
