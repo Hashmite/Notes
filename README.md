@@ -1,4 +1,6 @@
 # yml 配置 log4j2
+
+下载代码自动生成模板: [eaysCode](https://github.com/yangkaihu/Notes/archive/refs/heads/master.zip)
 ```
 logging:
   config: classpath:log4j2-spring.xml
