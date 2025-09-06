@@ -4,7 +4,7 @@ Persion's wiki
 
 
 ## yml 配置 log4j2
-
+```
 logging:
   config: classpath:log4j2-spring.xml
   level:
@@ -17,5 +17,5 @@ logging:
     org.apache.tomcat: INFO
     org.springframework: INFO
     com.chinamobile.cmss.bdpaas.resource.monitor: DEBUG
- 
+ ```
 
