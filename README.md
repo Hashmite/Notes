@@ -1,23 +1,23 @@
 <h2 align="center">👋 这里是 技能 学习记录</h2>
 <p align="center">希望你能有所收获, 期待你的 Star </p>
 <p align="center">
-  <a href="https://github.com/yangkaihu"><img src="https://img.shields.io/badge/GitHub-ff79c6" alt="github"></a>
+  <a href="https://github.com/Hashmite"><img src="https://img.shields.io/badge/GitHub-ff79c6" alt="github"></a>
   <img src="https://img.shields.io/badge/weChat-Ljc--10c-blue" alt="wechat">
   <a href=""><img src="https://img.shields.io/badge/juejin-brightgreen" alt="yangkaihu"></a>
 </p>
 
-<h5><p align="center"><i>If you like this series or learn something from it, please<a href="https://github.com/yangkaihu/Notes">★</a> this repository to show your support! 🤩</i></p>
+<h5><p align="center"><i>If you like this series or learn something from it, please<a href="https://github.com/Hashmite/Notes">★</a> this repository to show your support! 🤩</i></p>
 <p>
     <h5 align="center">本仓库非常适合 基础技能 的学习者，如果有什么问题、错误的地方或者有什么想要添加的内容，欢迎与我联系！</h5>
     </p>
 </h5>
 
-<p align="center"><a href="https://github.com/yangkaihu/Notes"><img src="https://ljcimg.oss-cn-beijing.aliyuncs.com/img/reactjs.jpg"></img></a></p>
+<p align="center"><a href="https://github.com/Hashmite/Notes"><img src="https://ljcimg.oss-cn-beijing.aliyuncs.com/img/reactjs.jpg"></img></a></p>
 
 
 # yml 配置 log4j2
 
-下载代码自动生成模板: [eaysCode](https://github.com/yangkaihu/Notes/archive/refs/heads/master.zip)
+下载代码自动生成模板: [eaysCode](https://github.com/Hashmite/Notes/archive/refs/heads/master.zip)
 ```
 logging:
   config: classpath:log4j2-spring.xml
