@@ -41,10 +41,18 @@ logging:
 
 #  前端
 - [NodeJs 安装](https://github.com/yangkaihu/Notes/wiki/NodeJs-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89)
+- [react 基础认识 ](https://github.com/Hashmite/Notes/wiki/React--%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86)
                                                                           
 ## react 学习
 
-发士大夫
 
+
+## Star 趋势
+
+![Stars](https://api.star-history.com/svg?repos=Snailclimb/JavaGuide&type=Date)
+
+## 公众号
+
+如果大家想要实时关注我更新的文章以及分享的干货的话，可以关注我的公众号。
 
 
