@@ -18,7 +18,7 @@
 # yml 配置 log4j2
 
 下载代码自动生成模板: [eaysCode](https://github.com/Hashmite/Notes/archive/refs/heads/master.zip)
-```xml
+```yml
 logging:
   config: classpath:log4j2-spring.xml
   level:
