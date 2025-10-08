@@ -44,6 +44,7 @@ logging:
 - [React 基础认识 ](https://github.com/Hashmite/Notes/wiki/React--%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86)
 - [React 基础知识](https://github.com/Hashmite/Notes/wiki/React:-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
 - [React 基础知识1.0 ](https://github.com/Hashmite/Notes/wiki/React-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E3%80%901.0%E3%80%91)
+- [React 合成事件](https://github.com/Hashmite/Notes/wiki/React-%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6)
                                                                           
 
 
