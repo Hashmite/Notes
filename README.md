@@ -39,12 +39,7 @@ logging:
 - [docker 的安装](https://github.com/yangkaihu/Notes/wiki/docker--%E7%9A%84%E5%AE%89%E8%A3%85)
 - [Git一文带你理解如何使用](https://github.com/yangkaihu/Notes/wiki/Git%E4%B8%80%E6%96%87%E5%B8%A6%E4%BD%A0%E7%90%86%E8%A7%A3%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8)
 
-#  前端React学习
-- [NodeJs 安装](https://github.com/yangkaihu/Notes/wiki/NodeJs-%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE%EF%BC%88%E9%87%8D%E8%A6%81%EF%BC%89)
-- [React 基础认识 ](https://github.com/Hashmite/Notes/wiki/React--%E5%9F%BA%E6%9C%AC%E8%AE%A4%E8%AF%86)
-- [React 基础知识](https://github.com/Hashmite/Notes/wiki/React:-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86)
-- [React 基础知识1.0 ](https://github.com/Hashmite/Notes/wiki/React-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E3%80%901.0%E3%80%91)
-- [React 合成事件](https://github.com/Hashmite/Notes/wiki/React-%E5%90%88%E6%88%90%E4%BA%8B%E4%BB%B6)
+
                                                                           
 
 
