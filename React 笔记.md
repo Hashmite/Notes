@@ -153,6 +153,75 @@ export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 - **/var/log**，各种服务日志全部存放此处；邮件、缓存、队列等内容也在此目录下维护
 - **/bin、/usr/bin**：供普通用户使用的基础指令（如 `ls` 位于 `/bin/ls`  **/sbin、/usr/sbin**：系统管理指令，主要由 root 使用。
 
+
+Node提供了运行javaScript环境和平台而npm提供了管理这个平台上使用的代码库（包）的工具
+
+## 下载[NVM](https://nvm.uihtm.com/)   或者 [地址1](https://github.com/coreybutler/nvm-windows/releases)
+
+> 下载nvm包管理器: [点击下载](https://github.com/coreybutler/nvm-windows/releases); 并自定义目录下安装，在nvm 目录下 setting.text 文件加入淘宝镜像：
+```markdown
+ nvm  node_mirror  https://npmmirror.com/mirrors/node/  
+ nvm npm_mirror  https://npmmirror.com/mirrors/npm/ 
+ ```
+## 设置registry地址
+> registry = "http://registry.npmmirror.com/"  ||  npm config set registry http://registry.npmmirror.com/
+
+一般情况，安装npm 时，默认会 在C:\Users\yangkaihu 目录下生成一个.npmrc  文件，该文件便是 npm  的 镜像文件
+
+2. 管理员cmd 模式开启node管理版本功能: nvm on , 之后便可以下载 nvm install [版本号];使用指定nodejs 版本：nvm use [版本号]
+
+3. 如果在下载某个版本时用的不是指定的镜像源，也可以在下载时直接指定镜像源：
+
+ ```markdown
+  npm install  --registry=https://registry.npmmirror.com  [版本号]
+ ```
+
+## 配置 Node 环境变量
+* 配置nvm 变量：NVM_SYMLINK  ： D:\Program Files\nodejs   和  NVM_HOME：D:\nvm
+* 在安装nodejs 路径下 分别创建node_global(存放全局包的下载)、node_cache 并进行如下步骤： 
+
+```markdown
+○ 以管理员方式运行cmd: 
+	§ npm config set prefix "D:\Program Files\nodejs\node_global"
+	§ npm config set cache "D:\Program Files\nodejs\node_cache"
+  可以使用npm config  get 或者 npm config list   或者 npm config get registry  查看是否设置成功
+```
+
+ - 配置环境变量：和 JavaJDK 一样:
+       新建：NODE_PATH；"输入自己安装的nodejs文件的存储路径
+			测试： 输入npm install express -g
+
+
+## nvm查看node的版本
+
+- nvm list 命令 - 显示版本列表
+```
+nvm list // 显示已安装的版本（同 nvm list installed）
+nvm list installed // 显示已安装的版本
+nvm list available // 显示所有可以下载的版本
+
+```
+## nvm 常用指令
+
+```
+$ nvm version         // 查看nvm版本
+$ nvm install 4.6.2   // 安装node4.6.2版本（附带安装npm）
+$ nvm uninstall 4.6.2 // 卸载node4.6.2版本
+$ nvm list            // 查看node版本
+$ nvm use 4.6.2       // 将node版本切换到4.6.2版本
+$ nvm root　　　　     // 查看nvm安装路径 
+$ nvm install latest  //下载最新的node版本和与之对应的npm版本
+```
+
+## Node 与 Npm 的关系
+
+官方人员意识到这一点，将 Npm 安装集成到了 Node，也就是说现在你只需要安装一个 Node，就同时安装了 Npm。
+
+[NPM 介绍](https://dkvirus.gitbooks.io/-npm/content/chapter1.html)    [NPM 版本](https://www.npmjs.com/package/npm?activeTab=versions)   [华为开源镜像库](https://mirrors.huaweicloud.com/home)
+***
+
+
+
 # React 工程化 
 
 ## JSX 渲染底层逻辑
@@ -3383,6 +3452,7 @@ const A1= function A1(){
 
 export default A1
 ````
+
 
 
 
