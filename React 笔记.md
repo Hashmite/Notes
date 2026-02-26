@@ -153,6 +153,7 @@ export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
 - **/var/log**，各种服务日志全部存放此处；邮件、缓存、队列等内容也在此目录下维护
 - **/bin、/usr/bin**：供普通用户使用的基础指令（如 `ls` 位于 `/bin/ls`  **/sbin、/usr/sbin**：系统管理指令，主要由 root 使用。
 
+# node 配置和安装
 
 Node提供了运行javaScript环境和平台而npm提供了管理这个平台上使用的代码库（包）的工具
 
@@ -3452,6 +3453,7 @@ const A1= function A1(){
 
 export default A1
 ````
+
 
 
 
